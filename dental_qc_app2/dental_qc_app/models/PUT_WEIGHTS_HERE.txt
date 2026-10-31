@@ -1,0 +1,5 @@
+Put your two .pt/.pth checkpoints here:
+  fdi_numbering.pt   (Model 1)
+  rct_quality.pt     (Model 2)
+
+Or use the file-upload boxes in the app's sidebar instead of a fixed path.
