@@ -8,6 +8,34 @@ statistics.
 > This README describes only what is in this repository. Places where the code
 > and the intended design disagree are listed under [Known gaps](#known-gaps).
 
+## How it works
+
+```mermaid
+flowchart TD
+    A[OPG image] --> B[Model 1: YOLO detect<br/>32 FDI classes]
+    B --> C[One box per FDI number<br/>highest confidence kept]
+    C --> D[Crop each tooth<br/>15% padding, from original image]
+    D --> E[Model 2: YOLO OBB<br/>class: Root Canal Treatment]
+    E -->|box found| F[RCT_Present]
+    E -->|no box| G[No_RCT]
+    C --> H[Missing teeth list]
+    F --> I[Per-tooth table + risk heatmap]
+    G --> I
+    H --> I
+    I --> J[CSV export]
+    I --> K[Batch prevalence stats]
+```
+
+Model 1 inference in `fdi-tooth-detection/predict.py`:
+
+```mermaid
+flowchart LR
+    A[Image] --> B[RGB] --> C[Resize, keep ratio<br/>black 1024x1024 canvas] --> D[YOLO predict<br/>imgsz 1024, conf 0.4, iou 0.4] --> E[Dedupe per FDI number] --> F[Sort in FDI order] --> G[CSV + annotated image]
+```
+
+Confidence bands used in the newer local `predict.py` (not yet committed):
+High at 0.6 or above, "Medium - verify" at 0.4 or above, otherwise "Low - manual check required".
+
 ## What is used
 
 ### Models
