@@ -200,5 +200,3 @@ If you use this work, please also cite the DENTEX dataset (Hamamci et al., MICCA
  
 Code: *add your license here (e.g. MIT).*
 Data: DENTEX is CC-BY-NC-SA 4.0 and is **not** redistributed in this repository.
- 
-Claude finished the response
